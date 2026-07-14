@@ -4,7 +4,6 @@ import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Header } from "@/components/dashboard/Header";
 import { CurrentBillCard } from "@/components/dashboard/CurrentBillCard";
 import { InvoicesTable } from "@/components/dashboard/InvoicesTable";
-import { PaymentFlow } from "@/components/payment/PaymentFlow";
 import { CheckoutScreen } from "@/components/payment/CheckoutScreen";
 import { PaymentSuccessScreen } from "@/components/payment/PaymentSuccessScreen";
 import { Button } from "@/components/ui/button";
@@ -32,7 +31,6 @@ interface LocationState {
 
 const Faturas = () => {
   const [activeItem, setActiveItem] = useState("faturas");
-  const [paymentModalOpen, setPaymentModalOpen] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>("list");
   const [selectedInvoices, setSelectedInvoices] = useState<Invoice[]>([]);
   const [paymentMethod, setPaymentMethod] = useState<string>("");
@@ -140,15 +138,6 @@ const Faturas = () => {
     setDatePopoverOpen(false);
   };
 
-  const handlePayClick = () => {
-    if (overdueInvoices.length === 0) {
-      setSelectedInvoices([...openInvoices]);
-      setViewMode("checkout");
-    } else {
-      setPaymentModalOpen(true);
-    }
-  };
-
   const handleNavigation = (item: string) => {
     setActiveItem(item);
     if (item === "inicio") {
@@ -160,12 +149,6 @@ const Faturas = () => {
     } else if (item === "servicos") {
       navigate("/servicos");
     }
-  };
-
-  const handleCheckout = (invoices: Invoice[]) => {
-    setSelectedInvoices(invoices);
-    setPaymentModalOpen(false);
-    setViewMode("checkout");
   };
 
   const handlePaymentSuccess = (method: string) => {
@@ -238,11 +221,10 @@ const Faturas = () => {
         </div>
 
         {showPaymentCard && (
-          <CurrentBillCard 
-            amount={pendingTotal} 
-            label={billLabel} 
+          <CurrentBillCard
+            amount={pendingTotal}
+            label={billLabel}
             hasOverdue={hasOverdue}
-            onPayClick={handlePayClick}
           />
         )}
 
@@ -406,13 +388,6 @@ const Faturas = () => {
           {renderContent()}
         </main>
       </div>
-
-      <PaymentFlow
-        open={paymentModalOpen}
-        onOpenChange={setPaymentModalOpen}
-        invoices={portfolioInvoices}
-        onCheckout={handleCheckout}
-      />
 
       {/* Fixed Selection Action Bar */}
       {viewMode === "list" && tableSelectedIds.size > 0 && (
