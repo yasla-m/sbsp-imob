@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
-import { Download, Loader2, Calendar, X, Disc } from "lucide-react";
+import { Download, Loader2, Calendar, X, Disc, CreditCard } from "lucide-react";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Header } from "@/components/dashboard/Header";
 import { CurrentBillCard } from "@/components/dashboard/CurrentBillCard";
@@ -47,7 +47,7 @@ const Faturas = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const isMobile = useIsMobile();
-  const { selectedCompany, selectedProperty, portfolioMode, getAllProperties } = useSelection();
+  const { selectedProperty, portfolioMode, getAllProperties } = useSelection();
   const { getInvoicesByAddress, getInvoicesByAddressIds, getInvoiceUtils, markInvoicesAsPaid } = useInvoices();
 
   useEffect(() => {
@@ -70,6 +70,18 @@ const Faturas = () => {
   const { pendingInvoices, pendingTotal, hasOverdue, overdueInvoices, openInvoices } = useMemo(() => {
     return getInvoiceUtils(portfolioInvoices);
   }, [portfolioInvoices, getInvoiceUtils]);
+
+  const selectedTableInvoices = useMemo(
+    () => portfolioInvoices.filter((inv) => tableSelectedIds.has(inv.id)),
+    [portfolioInvoices, tableSelectedIds],
+  );
+  const selectedTableTotal = useMemo(
+    () => selectedTableInvoices.reduce((sum, inv) => sum + inv.amount, 0),
+    [selectedTableInvoices],
+  );
+
+  const formatCurrency = (value: number) =>
+    new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value);
 
   const billLabel = useMemo(() => {
     if (hasOverdue) {
@@ -186,6 +198,11 @@ const Faturas = () => {
     setTableSelectedIds(new Set());
   };
 
+  const handlePaySelected = () => {
+    setSelectedInvoices(selectedTableInvoices);
+    setViewMode("checkout");
+  };
+
   const renderContent = () => {
     if (viewMode === "checkout") {
       return (
@@ -212,12 +229,7 @@ const Faturas = () => {
     return (
       <div className="max-w-[1200px] mx-auto w-full space-y-4 md:space-y-6">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">Faturas</h1>
-          <p className="text-sm md:text-base text-muted-foreground">
-            {portfolioMode
-              ? `CNPJ nº ${selectedCompany?.cnpj || '-'} · Todos os imóveis`
-              : `CNPJ nº ${selectedCompany?.cnpj || '-'} · Fornecimento nº ${selectedProperty?.fornecimento || '-'}`}
-          </p>
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground">Faturas</h1>
         </div>
 
         {showPaymentCard && (
@@ -392,29 +404,36 @@ const Faturas = () => {
       {/* Fixed Selection Action Bar */}
       {viewMode === "list" && tableSelectedIds.size > 0 && (
         <div className="fixed bottom-4 left-4 md:left-[240px] right-4 mx-0 md:mx-4 p-3 md:p-4 bg-card border border-border rounded-xl shadow-lg flex items-center justify-between z-50">
-          <span className="text-xs md:text-sm font-medium text-foreground">
-            {tableSelectedIds.size} fatura{tableSelectedIds.size !== 1 ? 's' : ''} selecionada{tableSelectedIds.size !== 1 ? 's' : ''}
-          </span>
-          
+          <div>
+            <p className="text-xs md:text-sm font-medium text-muted-foreground">
+              {tableSelectedIds.size} fatura{tableSelectedIds.size !== 1 ? 's' : ''} selecionada{tableSelectedIds.size !== 1 ? 's' : ''}
+            </p>
+            <p className="text-lg md:text-xl font-bold text-foreground">
+              {formatCurrency(selectedTableTotal)}
+            </p>
+          </div>
+
           <div className="flex items-center gap-2 md:gap-3">
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               size="sm"
               className="text-primary hover:text-primary hover:bg-primary/10 hidden sm:flex"
               onClick={clearTableSelection}
             >
               Limpar seleção
             </Button>
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               size="icon"
               className="text-primary hover:text-primary hover:bg-primary/10 sm:hidden"
               onClick={clearTableSelection}
             >
               <X className="w-4 h-4" />
             </Button>
-            <Button 
+            <Button
+              variant="ghost"
               size="sm"
+              className="bg-primary/10 text-primary hover:bg-primary/15 hover:text-primary"
               onClick={handleExportSelected}
               disabled={isExporting}
             >
@@ -424,6 +443,10 @@ const Faturas = () => {
                 <Download className="w-4 h-4 md:mr-2" />
               )}
               <span className="hidden md:inline">Exportar</span>
+            </Button>
+            <Button size="sm" onClick={handlePaySelected}>
+              <CreditCard className="w-4 h-4 md:mr-2" />
+              <span className="hidden md:inline">Pagar</span>
             </Button>
           </div>
         </div>
