@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
-import { Search, ChevronRight, CreditCard, Building2, Wallet, CalendarClock, Scissors } from "lucide-react";
+import { Search, ChevronLeft, ChevronRight, CreditCard, Building2, Wallet, CalendarClock, Scissors } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Header } from "@/components/dashboard/Header";
@@ -12,8 +12,6 @@ import {
   PaginationEllipsis,
   PaginationItem,
   PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
 } from "@/components/ui/pagination";
 import { cn } from "@/lib/utils";
 import { useSelection } from "@/contexts/SelectionContext";
@@ -313,21 +311,24 @@ const Imoveis = () => {
 
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-3">
               <p className="text-xs text-muted-foreground">
-                {filtered.length} de {carteira.length} imóveis
+                {paginated.length} de {filtered.length} imóveis
               </p>
 
               {totalPages > 1 && (
                 <Pagination className="mx-0 w-auto">
                   <PaginationContent>
                     <PaginationItem>
-                      <PaginationPrevious
+                      <PaginationLink
                         href="#"
+                        aria-label="Página anterior"
                         onClick={(e) => {
                           e.preventDefault();
                           if (currentPage > 1) setPage(currentPage - 1);
                         }}
                         className={currentPage === 1 ? "pointer-events-none opacity-50" : undefined}
-                      />
+                      >
+                        <ChevronLeft className="h-4 w-4" />
+                      </PaginationLink>
                     </PaginationItem>
 
                     {getPageNumbers(currentPage, totalPages).map((p, i) =>
@@ -352,14 +353,17 @@ const Imoveis = () => {
                     )}
 
                     <PaginationItem>
-                      <PaginationNext
+                      <PaginationLink
                         href="#"
+                        aria-label="Próxima página"
                         onClick={(e) => {
                           e.preventDefault();
                           if (currentPage < totalPages) setPage(currentPage + 1);
                         }}
                         className={currentPage === totalPages ? "pointer-events-none opacity-50" : undefined}
-                      />
+                      >
+                        <ChevronRight className="h-4 w-4" />
+                      </PaginationLink>
                     </PaginationItem>
                   </PaginationContent>
                 </Pagination>
