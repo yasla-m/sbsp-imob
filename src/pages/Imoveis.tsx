@@ -169,9 +169,9 @@ const Imoveis = () => {
         onMobileClose={() => setIsSidebarOpen(false)}
       />
 
-      <div className="flex-1 flex flex-col overflow-hidden border-0 border-none bg-slate-50">
+      <div className="flex-1 flex flex-col overflow-hidden border-0 border-none bg-background">
         <Header
-          className="border-0 border-none py-[16px] px-4 md:px-[16px] bg-slate-50 shrink-0"
+          className="border-0 border-none py-[16px] px-4 md:px-[16px] bg-background shrink-0"
           onMenuClick={() => setIsSidebarOpen(true)}
         />
 

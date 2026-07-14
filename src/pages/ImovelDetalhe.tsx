@@ -107,7 +107,7 @@ const ImovelDetalhe = () => {
         <div className="hidden md:block">
           <Sidebar activeItem={activeItem} onItemClick={handleNavigation} className="border-0 bg-secondary border-none border-background" />
         </div>
-        <div className="flex-1 flex items-center justify-center bg-slate-50">
+        <div className="flex-1 flex items-center justify-center bg-background">
           <div className="text-center">
             <p className="text-muted-foreground mb-4">Nenhum imóvel selecionado.</p>
             <button onClick={() => navigate("/")} className="text-primary font-medium">Voltar para Imóveis</button>
@@ -124,8 +124,8 @@ const ImovelDetalhe = () => {
       </div>
       <Sidebar activeItem={activeItem} onItemClick={handleNavigation} isMobileOpen={isSidebarOpen} onMobileClose={() => setIsSidebarOpen(false)} />
 
-      <div className="flex-1 flex flex-col overflow-hidden border-0 border-none bg-slate-50">
-        <Header className="border-0 border-none py-[16px] px-4 md:px-[16px] bg-slate-50 shrink-0" onMenuClick={() => setIsSidebarOpen(true)} />
+      <div className="flex-1 flex flex-col overflow-hidden border-0 border-none bg-background">
+        <Header className="border-0 border-none py-[16px] px-4 md:px-[16px] bg-background shrink-0" onMenuClick={() => setIsSidebarOpen(true)} />
 
         <main className="flex-1 min-h-0 p-4 md:p-8 overflow-auto border-accent rounded-3xl border-0 bg-white mx-2 md:mx-[16px] mb-2 md:mb-[16px]">
           <div className="max-w-[1200px] mx-auto w-full">
