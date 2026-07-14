@@ -130,14 +130,14 @@ const Servicos = () => {
                 </div>
               </div>
 
-              {/* Consumo e faturas Section */}
+              {/* Outros serviços Section */}
               <div>
-                <h2 className="text-lg md:text-xl font-semibold text-foreground mb-4">Consumo e faturas</h2>
+                <h2 className="text-lg md:text-xl font-semibold text-foreground mb-4">Outros serviços</h2>
                 <div className="space-y-2 md:space-y-3">
-                  <ServiceListItem icon={<Receipt className="w-5 h-5" />} title="Informe de pagamento" />
-                  <ServiceListItem icon={<BarChart3 className="w-5 h-5" />} title="Histórico de consumo" />
-                  <ServiceListItem icon={<CreditCard className="w-5 h-5" />} title="Meus parcelamentos" />
-                  <ServiceListItem icon={<RefreshCcw className="w-5 h-5" />} title="Reparcelamentos" />
+                  <ServiceListItem icon={<Receipt className="w-5 h-5" />} title="Emitir segunda via" />
+                  <ServiceListItem icon={<BarChart3 className="w-5 h-5" />} title="Revisão de fatura" />
+                  <ServiceListItem icon={<CreditCard className="w-5 h-5" />} title="Cadastro de representante legal" />
+                  <ServiceListItem icon={<RefreshCcw className="w-5 h-5" />} title="Mudança de titularidade" />
                 </div>
               </div>
             </div>
