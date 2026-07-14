@@ -9,7 +9,6 @@ import { BillStatusCard } from "@/components/dashboard/BillStatusCard";
 import { ConsumptionChart, BillingMonthData } from "@/components/dashboard/ConsumptionChart";
 import { InvoicesList } from "@/components/dashboard/InvoicesList";
 import { QuickActionCard } from "@/components/dashboard/QuickActionCard";
-import { PaymentFlow } from "@/components/payment/PaymentFlow";
 import { Badge } from "@/components/ui/badge";
 import { useSelection } from "@/contexts/SelectionContext";
 import { useInvoices } from "@/contexts/InvoicesContext";
@@ -25,7 +24,6 @@ const monthOrder = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho
 
 const ImovelDetalhe = () => {
   const [activeItem, setActiveItem] = useState("imoveis");
-  const [paymentOpen, setPaymentOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
   const { selectedCompany } = useSelection();
@@ -161,7 +159,7 @@ const ImovelDetalhe = () => {
                     amount={pendingTotal}
                     label={billLabel}
                     hasOverdue={hasOverdue}
-                    onPayClick={() => setPaymentOpen(true)}
+                    onPayClick={() => handleCheckout(pendingInvoices)}
                   />
                 )}
                 <InvoicesList invoices={imovelInvoices} />
@@ -179,8 +177,6 @@ const ImovelDetalhe = () => {
           </div>
         </main>
       </div>
-
-      <PaymentFlow open={paymentOpen} onOpenChange={setPaymentOpen} invoices={imovelInvoices} onCheckout={handleCheckout} />
     </div>
   );
 };

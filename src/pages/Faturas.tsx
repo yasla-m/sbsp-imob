@@ -203,6 +203,11 @@ const Faturas = () => {
     setViewMode("checkout");
   };
 
+  const handlePayPending = () => {
+    setSelectedInvoices(pendingInvoices);
+    setViewMode("checkout");
+  };
+
   const renderContent = () => {
     if (viewMode === "checkout") {
       return (
@@ -237,6 +242,7 @@ const Faturas = () => {
             amount={pendingTotal}
             label={billLabel}
             hasOverdue={hasOverdue}
+            onPayClick={handlePayPending}
           />
         )}
 
