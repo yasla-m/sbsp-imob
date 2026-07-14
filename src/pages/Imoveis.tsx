@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Search, ChevronRight, CreditCard, Building2, Wallet, CalendarClock, Scissors } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Sidebar } from "@/components/dashboard/Sidebar";
@@ -6,6 +6,15 @@ import { Header } from "@/components/dashboard/Header";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import { cn } from "@/lib/utils";
 import { useSelection } from "@/contexts/SelectionContext";
 import { useInvoices } from "@/contexts/InvoicesContext";
@@ -32,11 +41,26 @@ const situacaoFilterOptions: { key: Situacao; label: string }[] = [
   { key: "dia", label: "Em dia" },
 ];
 
+const PAGE_SIZE = 10;
+
+const getPageNumbers = (current: number, total: number): (number | "ellipsis")[] => {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+  const pages = new Set([1, total, current - 1, current, current + 1]);
+  const sorted = [...pages].filter((p) => p >= 1 && p <= total).sort((a, b) => a - b);
+  const withEllipsis: (number | "ellipsis")[] = [];
+  sorted.forEach((p, i) => {
+    if (i > 0 && p - sorted[i - 1] > 1) withEllipsis.push("ellipsis");
+    withEllipsis.push(p);
+  });
+  return withEllipsis;
+};
+
 const Imoveis = () => {
   const [activeItem, setActiveItem] = useState("imoveis");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [situacaoFilter, setSituacaoFilter] = useState<Set<Situacao>>(new Set());
+  const [page, setPage] = useState(1);
   const navigate = useNavigate();
   const { companies, setSelectedCompany } = useSelection();
   const { invoices, getInvoiceUtils } = useInvoices();
@@ -108,6 +132,14 @@ const Imoveis = () => {
     }
     return result;
   }, [carteira, situacaoFilter, search]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [search, situacaoFilter]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const currentPage = Math.min(page, totalPages);
+  const paginated = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
   const toggleFilter = (key: Situacao) => {
     setSituacaoFilter((prev) => {
@@ -225,7 +257,7 @@ const Imoveis = () => {
                   Nenhum imóvel encontrado.
                 </div>
               ) : (
-                filtered.map((row) => {
+                paginated.map((row) => {
                   const meta = situacaoMeta[row.situacao];
                   return (
                     <button
@@ -279,9 +311,60 @@ const Imoveis = () => {
               )}
             </div>
 
-            <p className="text-xs text-muted-foreground mt-3">
-              {filtered.length} de {carteira.length} imóveis
-            </p>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-3">
+              <p className="text-xs text-muted-foreground">
+                {filtered.length} de {carteira.length} imóveis
+              </p>
+
+              {totalPages > 1 && (
+                <Pagination className="mx-0 w-auto">
+                  <PaginationContent>
+                    <PaginationItem>
+                      <PaginationPrevious
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          if (currentPage > 1) setPage(currentPage - 1);
+                        }}
+                        className={currentPage === 1 ? "pointer-events-none opacity-50" : undefined}
+                      />
+                    </PaginationItem>
+
+                    {getPageNumbers(currentPage, totalPages).map((p, i) =>
+                      p === "ellipsis" ? (
+                        <PaginationItem key={`ellipsis-${i}`}>
+                          <PaginationEllipsis />
+                        </PaginationItem>
+                      ) : (
+                        <PaginationItem key={p}>
+                          <PaginationLink
+                            href="#"
+                            isActive={p === currentPage}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setPage(p);
+                            }}
+                          >
+                            {p}
+                          </PaginationLink>
+                        </PaginationItem>
+                      ),
+                    )}
+
+                    <PaginationItem>
+                      <PaginationNext
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          if (currentPage < totalPages) setPage(currentPage + 1);
+                        }}
+                        className={currentPage === totalPages ? "pointer-events-none opacity-50" : undefined}
+                      />
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+              )}
+            </div>
           </div>
         </main>
       </div>
