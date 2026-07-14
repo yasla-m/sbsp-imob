@@ -1,0 +1,266 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+@layer base {
+  :root {
+    --background: 210 29% 97%;
+    --foreground: 229 84% 4.902%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 217 32.5843% 17.451%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 265 4% 12.9%;
+
+    --primary: 216 80.3279% 52.1569%;
+    --primary-foreground: 228 100% 99.0196%;
+
+    --secondary: 217 32.5843% 17.451%;
+    --secondary-foreground: 228 100% 99.0196%;
+
+    --muted: 210 40% 98.0392%;
+    --muted-foreground: 215 16.318% 46.8627%;
+
+    --accent: 248 0.7% 96.8%;
+    --accent-foreground: 266 4% 20.8%;
+
+    --destructive: 0 72.2222% 50.5882%;
+    --destructive-foreground: 228 100% 99.0196%;
+
+    --success: 142 70% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 25 95% 53%;
+    --warning-foreground: 0 0% 100%;
+
+    --pending: 25 95% 53%;
+    --pending-foreground: 25 95% 30%;
+
+    --paid: 142 70% 45%;
+    --paid-foreground: 142 70% 25%;
+
+    --bill-card-bg: 25 100% 97%;
+    --bill-card-text: 25 95% 40%;
+    --bill-card-amount: 25 95% 35%;
+
+    --bill-card-danger-bg: 0 85% 97%;
+    --bill-card-danger-text: 0 84% 45%;
+    --bill-card-danger-amount: 0 84% 40%;
+
+    --overdue: 0 84% 60%;
+    --overdue-foreground: 0 84% 35%;
+
+    --border: 214 31.8182% 91.3725%;
+    --input: 214 31.8182% 91.3725%;
+    --ring: 215 16.318% 46.8627%;
+
+    --radius: 1.25rem;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 265 4% 12.9%;
+    --sidebar-primary: 266 4% 20.8%;
+    --sidebar-primary-foreground: 248 0.3% 98.4%;
+    --sidebar-accent: 248 0.7% 96.8%;
+    --sidebar-accent-foreground: 266 4% 20.8%;
+    --sidebar-border: 256 1.3% 92.9%;
+    --sidebar-ring: 257 4% 70.4%;
+    --sidebar-item-active: 216 80% 95%;
+
+    --chart-bar: 217 91% 60%;
+
+    --chart-1: 217 91.2195% 59.8039%;
+
+    --chart-2: 185 11.8% 60%;
+
+    --chart-3: 227 7% 39.8%;
+
+    --chart-4: 84 18.9% 82.8%;
+
+    --chart-5: 70 18.8% 76.9%;
+
+    --sidebar: 248 0.3% 98.4%;
+
+    --font-sans: Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+
+    --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+    --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+
+    --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+
+    --shadow-sm: -10px -10px 0px -10px hsla(0, 0%, 0%, 0);
+
+    --shadow: -10px -10px 0px -10px hsla(0, 0%, 0%, 0);
+
+    --shadow-md: -10px -10px 0px -10px hsla(0, 0%, 0%, 0);
+
+    --shadow-lg: -10px -10px 0px -10px hsla(0, 0%, 0%, 0);
+
+    --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
+
+    --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+
+    --tracking-normal: 0em;
+
+    --spacing: 0.25rem;
+  }
+
+  .dark {
+    --background: 0 0% 15%;
+    --foreground: 248 0.3% 98.4%;
+
+    --card: 266 4% 20.8%;
+    --card-foreground: 248 0.3% 98.4%;
+
+    --popover: 266 4% 20.8%;
+    --popover-foreground: 248 0.3% 98.4%;
+
+    --primary: 256 1.3% 92.9%;
+    --primary-foreground: 266 4% 20.8%;
+
+    --secondary: 260 4.1% 27.9%;
+    --secondary-foreground: 248 0.3% 98.4%;
+
+    --muted: 260 4.1% 27.9%;
+    --muted-foreground: 257 4% 70.4%;
+
+    --accent: 260 4.1% 27.9%;
+    --accent-foreground: 248 0.3% 98.4%;
+
+    --destructive: 22 19.1% 70.4%;
+    --destructive-foreground: 248 0.3% 98.4%;
+
+    --border: 0 0% 100% / 10%;
+    --input: 0 0% 100% / 15%;
+    --ring: 264 2.7% 55.1%;
+
+    --sidebar-background: 220 20% 12%;
+    --sidebar-foreground: 248 0.3% 98.4%;
+    --sidebar-primary: 264 24.3% 48.8%;
+    --sidebar-primary-foreground: 248 0.3% 98.4%;
+    --sidebar-accent: 260 4.1% 27.9%;
+    --sidebar-accent-foreground: 248 0.3% 98.4%;
+    --sidebar-border: 0 0% 100% / 10%;
+    --sidebar-ring: 264 2.7% 55.1%;
+    --chart-1: 264 24.3% 48.8%;
+    --chart-2: 162 17% 69.6%;
+    --chart-3: 70 18.8% 76.9%;
+    --chart-4: 304 26.5% 62.7%;
+    --chart-5: 16 24.6% 64.5%;
+    --sidebar: 266 4% 20.8%;
+    --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+    --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+    --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+    --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+    --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
+    --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
+    --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
+    --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+@layer components {
+  .sidebar-item {
+    @apply flex items-center gap-3 px-4 py-3 rounded-lg text-sidebar-foreground transition-all duration-200;
+  }
+
+  .sidebar-item:hover {
+    @apply bg-sidebar-accent text-sidebar-accent-foreground;
+  }
+
+  .sidebar-item.active {
+    @apply bg-[hsl(var(--sidebar-item-active))] text-primary font-medium;
+  }
+
+  .bill-card {
+    @apply bg-[hsl(var(--bill-card-bg))] rounded-xl p-6;
+  }
+
+  .bill-card.danger {
+    @apply bg-[hsl(var(--bill-card-danger-bg))];
+  }
+
+  .bill-card.danger .text-bill-text {
+    @apply text-[hsl(var(--bill-card-danger-text))];
+  }
+
+  .bill-card.danger .text-bill-amount {
+    @apply text-[hsl(var(--bill-card-danger-amount))];
+  }
+
+  .status-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  .status-pending {
+    @apply text-[hsl(var(--pending-foreground))] bg-[hsl(var(--pending)/0.15)];
+  }
+
+  .status-paid {
+    @apply text-[hsl(var(--paid-foreground))] bg-[hsl(var(--paid)/0.15)];
+  }
+
+  .status-overdue {
+    @apply text-[hsl(var(--overdue-foreground))] bg-[hsl(var(--overdue)/0.15)];
+  }
+
+  /* Address status badges */
+  .status-ativo {
+    @apply text-[hsl(var(--paid-foreground))] bg-[hsl(var(--paid)/0.15)];
+  }
+
+  .status-alugado {
+    @apply text-[hsl(var(--paid-foreground))] bg-[hsl(var(--paid)/0.15)];
+  }
+
+  .status-inativo {
+    @apply text-[hsl(var(--overdue-foreground))] bg-[hsl(var(--overdue)/0.15)];
+  }
+
+  .status-vazio {
+    @apply text-[hsl(var(--overdue-foreground))] bg-[hsl(var(--overdue)/0.15)];
+  }
+
+  .status-em-ativacao {
+    @apply text-primary bg-primary/15;
+  }
+
+  /* Solicitação status badges */
+  .status-em-andamento {
+    @apply text-primary bg-primary/15;
+  }
+
+  .status-finalizada {
+    @apply text-[hsl(var(--paid-foreground))] bg-[hsl(var(--paid)/0.15)];
+  }
+
+  .status-pendente {
+    @apply text-[hsl(var(--pending-foreground))] bg-[hsl(var(--pending)/0.15)];
+  }
+
+  .status-interrompida {
+    @apply text-[hsl(var(--pending-foreground))] bg-[hsl(var(--pending)/0.15)];
+  }
+
+  .status-cancelada {
+    @apply text-[hsl(var(--overdue-foreground))] bg-[hsl(var(--overdue)/0.15)];
+  }
+}
