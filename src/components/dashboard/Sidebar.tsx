@@ -37,17 +37,17 @@ function SidebarContent({
   return (
     <TooltipProvider delayDuration={0}>
       {/* Logo */}
-      <div className="border-b border-sidebar-border bg-slate-50 h-12 md:h-14 flex items-center justify-center px-2">
+      <div className="border-b border-sidebar-border bg-background h-20 md:h-[88px] flex items-center justify-center px-2">
         <img
           src={sabespLogo}
           alt="Sabesp"
-          className="h-8 w-auto object-contain"
+          className="h-8 w-8 object-contain"
           loading="lazy"
         />
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 space-y-1 py-4 bg-slate-50 px-2">
+      <nav className="flex-1 space-y-1 py-4 bg-background px-2">
         {menuItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeItem === item.id;
